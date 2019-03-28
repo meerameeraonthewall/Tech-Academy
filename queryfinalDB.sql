@@ -21,14 +21,10 @@ GO
 
 
 /*3*/
-/*In this DB every borrower has checked out at least one book, so the query checks whether the borrower is in the loan table
-OR whether the loan's due date has already passed as of today (@DueDate in format INT like this: YYYMMDD), which assumes that all books have been returned on time. */
-
-CREATE PROCEDURE usp_3 @DueDate INT
+CREATE PROCEDURE usp_3
 AS
-SELECT * FROM tbl_borrower c1
-INNER JOIN tbl_loans c2 ON bor_no = loan_card
-WHERE bor_no NOT IN (loan_card) OR @DueDate> loan_due
+SELECT tbl_borrower.* FROM tbl_borrower
+WHERE bor_no not in(SELECT loan_card FROM tbl_loans);
 GO
 
 
